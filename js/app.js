@@ -370,10 +370,10 @@
                     data:$(this.body).parent().siblings().is('.raw-toggle.on') ? this.body.value : $bodyBuilder.getObject(),
 
                     beforeSend: auth.ajaxBeforeSend
-                  }; 
+                  };
 
           req.query = query = $(this.query).parent().siblings().is('.raw-toggle.on') ? this.query.value : $queryBuilder.getObject();
-          req.url = config.api_url + req.path + '?';
+          req.url = config.api_url + "/wp/v2" + req.path + '?';
 
           request = $('<li></li>').prependTo(log).addClass('loading'),
           title = $("<h2><small>"+safeText( req.method )+"</small> "+safeText( req.path )+"</h2>").appendTo(request);
@@ -392,6 +392,17 @@
 
         console.log('test');
           console.log(req);
+
+          //req.dataType =  'json';
+          req.contentType = "application/json";
+          req.headers = {
+              'Content-Type': "application/json"
+          };
+        //   req.beforeSend = function(xhrObj){
+        //         xhrObj.setRequestHeader("Content-Type","application/json");
+        //         xhrObj.setRequestHeader("Accept","application/json");
+        //         // xhrObj.setRequestHeader("Origin","chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop");
+        // };
 
           $.ajax( req ).done( function(response, statusCode){
             var responseTime = (new Date).getTime() - timer;
@@ -465,9 +476,9 @@
               } else {
                 query_string[pair[0]].push(pair[1]);
               }
-            } 
+            }
             return query_string;
           };
-   
+
 
  });
